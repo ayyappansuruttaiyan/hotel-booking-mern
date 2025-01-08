@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import mongoose, { mongo } from "mongoose";
 import authRoute from "./routes/auth.js";
 import hotelsRoute from "./routes/hotels.js";
-import userRoute from "./routes/user.js";
+import userRoute from "./routes/users.js";
+import cookieParser from "cookie-parser";
 const app = express();
 dotenv.config();
 
@@ -27,6 +28,7 @@ mongoose.connection.on("connected", () =>
 // MONGODB CONNECTION END
 
 //middlewares
+app.use(cookieParser());
 app.use(express.json());
 // app.use("*", authRoute);
 app.use("/api/auth", authRoute);

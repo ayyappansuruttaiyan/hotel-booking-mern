@@ -5,15 +5,16 @@ import {
   addHotel,
   updateHotel,
   deleteHotel,
-} from "../controllers/hotels.js";
+} from "../controllers/hotel.js";
+import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 //api end points for hotels
-router.post("/", addHotel);
-router.put("/:id", updateHotel);
-router.delete("/:id", deleteHotel);
-router.get("/:id", getHotelById);
+router.post("/", verifyAdmin, addHotel);
+router.put("/:id", verifyAdmin, updateHotel);
+router.delete("/:id", verifyAdmin, deleteHotel);
+router.get("/:id", verifyAdmin, getHotelById);
 router.get("/", getHotels);
 
 //api endpoints for user
