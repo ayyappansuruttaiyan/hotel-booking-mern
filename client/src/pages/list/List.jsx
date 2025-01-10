@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import { enUS } from "date-fns/locale";
 import { useState } from "react";
+import SearchList from "../../components/searchList/SearchItem";
 
 function List() {
   const location = useLocation();
@@ -103,7 +104,16 @@ function List() {
             </div>
             <button>Search</button>
           </div>
-          <div className="listResult"></div>
+          <div className="listResult">
+            <SearchList />
+            <SearchList />
+            <SearchList />
+            <SearchList />
+            <SearchList />
+            <SearchList />
+            <SearchList />
+            <SearchList />
+          </div>
         </div>
       </div>
     </div>
