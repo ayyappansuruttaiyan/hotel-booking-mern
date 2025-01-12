@@ -82,11 +82,13 @@ function Header({ type }) {
 
             <div className="headerSearch">
               <div className="headerSearchItem">
+                <form></form>
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
                 <input
                   type="text"
-                  placeholder="where are you going"
+                  placeholder="Where are you going?"
                   className="headerSearchInput"
+                  required
                   onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
