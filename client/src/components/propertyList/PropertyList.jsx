@@ -1,3 +1,4 @@
+import Spinner from "../../utils/Spinner";
 import useFetch from "../hooks/useFetch";
 import "./propertyList.css";
 
@@ -17,12 +18,12 @@ function PropertyList() {
   return (
     <div className="pList">
       {loading ? (
-        "please wait loading"
+        <Spinner />
       ) : (
         <>
           {data.length > 0 &&
             images.map((img, i) => (
-              <div className="pListItem">
+              <div className="pListItem" key={i}>
                 <img src={img} alt="" className="pListImg" />
                 <div className="pListTitles">
                   <h1>{data[i]?.type}</h1>

@@ -1,8 +1,18 @@
 import Hotel from "../models/Hotel.js";
 
 export const getHotels = async (req, res, next) => {
+  const { min, max, featured, limit } = req.query;
+  console.log(min, max);
+  const minimum = parseInt(min, 10) | 1;
+  const maximum = parseInt(max, 10) || 1801;
+  const isFeatured = featured === "true";
+  const limitNumber = parseInt(limit, 10) || 1;
+  //...others for featured=true or something extra
   try {
-    const hotels = await Hotel.find();
+    const hotels = await Hotel.find({
+      featured: isFeatured,
+      cheapestPrice: { $gt: minimum, $lt: maximum },
+    }).limit(limitNumber);
     res.status(200).json(hotels);
   } catch (error) {
     next(error);

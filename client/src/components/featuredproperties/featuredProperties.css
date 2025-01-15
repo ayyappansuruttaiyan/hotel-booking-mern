@@ -6,10 +6,11 @@
   gap: 20px;
   box-sizing: border-box;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 .fp > * {
   flex: 1;
-  min-width: 0;
+  min-width: 100;
 }
 .fpItem {
   flex: 1;
@@ -18,9 +19,11 @@
   flex-direction: column;
 }
 .fpImg {
+  border: 1px solid black;
   width: 100px;
   height: 100px;
   object-fit: cover;
+  overflow: hidden;
 }
 .fpName {
   font-weight: bold;
