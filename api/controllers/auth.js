@@ -36,7 +36,12 @@ export const login = async (req, res) => {
     );
     const { passkey, isAdmin, ...otherDetails } = user._doc;
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+      })
       .status(200)
       .json({ ...otherDetails });
     console.log(isPasswordCorrect);

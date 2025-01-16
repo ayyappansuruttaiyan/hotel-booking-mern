@@ -7,15 +7,28 @@ import { DateRange } from "react-date-range";
 import { enUS } from "date-fns/locale";
 import { useState } from "react";
 import SearchList from "../../components/searchList/SearchItem";
-
+import useFetch from "../../components/hooks/useFetch.js";
+import Spinner from "../../utils/Spinner.jsx";
 function List() {
   const location = useLocation();
-  console.log(location);
+  //console.log(location);
   const [openDate, setOpenDate] = useState(false);
   const [destination, setDestination] = useState(location.state.destination);
   const [date, setDate] = useState(location.state.date);
   const [options, setOptions] = useState(location.state.options);
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
 
+  const { data, loading, error, reFetch } = useFetch(
+    `http://localhost:8800/api/hotels?featured=true&limit=1&min=${
+      min || 1
+    }&max=${max || 999}&city=${destination}`
+  );
+
+  const handleSearch = () => {
+    reFetch();
+  };
+  console.log(data);
   return (
     <div>
       <Navbar />
@@ -58,8 +71,8 @@ function List() {
                   <input
                     type="number"
                     className="lsOptionInput"
-                    placeholder={options.adult}
                     min={1}
+                    onChange={(e) => setMin(e.target.value)}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -69,8 +82,8 @@ function List() {
                   <input
                     type="number"
                     className="lsOptionInput"
-                    placeholder={options.adult}
                     min={1}
+                    onChange={(e) => setMax(e.target.value)}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -102,17 +115,18 @@ function List() {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={handleSearch}>Search</button>
           </div>
           <div className="listResult">
-            <SearchList />
-            <SearchList />
-            <SearchList />
-            <SearchList />
-            <SearchList />
-            <SearchList />
-            <SearchList />
-            <SearchList />
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                {data.map((item) => (
+                  <SearchList key={item._id} item={item} />
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

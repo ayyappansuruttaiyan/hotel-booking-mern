@@ -1,7 +1,7 @@
 import Hotel from "../models/Hotel.js";
 
 export const getHotels = async (req, res, next) => {
-  const { min, max, featured, limit } = req.query;
+  const { min, max, featured, limit, city } = req.query;
   console.log(min, max);
   const minimum = parseInt(min, 10) | 1;
   const maximum = parseInt(max, 10) || 1801;
@@ -10,6 +10,7 @@ export const getHotels = async (req, res, next) => {
   //...others for featured=true or something extra
   try {
     const hotels = await Hotel.find({
+      city: city,
       featured: isFeatured,
       cheapestPrice: { $gt: minimum, $lt: maximum },
     }).limit(limitNumber);
@@ -54,6 +55,7 @@ export const countByType = async (req, res, next) => {
 };
 
 export const getHotelById = async (req, res, next) => {
+  console.log("cookies received", req.cookies);
   try {
     const hotel = await Hotel.findById(req.params.id);
     res.status(200).json(hotel);

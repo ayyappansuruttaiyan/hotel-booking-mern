@@ -30,7 +30,12 @@ mongoose.connection.on("connected", () =>
 // MONGODB CONNECTION END
 
 //middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true, // Allows cookies to be sent
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 // app.use("*", authRoute);
